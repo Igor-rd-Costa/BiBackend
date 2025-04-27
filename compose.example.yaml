@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: 'postgres:17.4'
+    environment:
+      - 'POSTGRES_DB=bidatabase'
+      - 'POSTGRES_PASSWORD=password'
+      - 'POSTGRES_USER=biadmin'
+    ports:
+      - '5433:5433'
+  rabbitmq:
+    image: 'rabbitmq:4.1'
+    environment:
+      - 'RABBITMQ_DEFAULT_PASS=password'
+      - 'RABBITMQ_DEFAULT_USER=biadmin'
+    ports:
+      - '5672:5672'
