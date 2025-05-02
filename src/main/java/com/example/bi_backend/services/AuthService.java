@@ -1,7 +1,9 @@
 package com.example.bi_backend.services;
 
+import com.example.bi_backend.domain.user.User;
 import com.example.bi_backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,5 +22,9 @@ public class AuthService implements UserDetailsService {
             throw new UsernameNotFoundException("");
         }
         return user;
+    }
+
+    public User getUser() {
+        return (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }

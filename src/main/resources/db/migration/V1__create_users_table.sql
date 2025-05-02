@@ -1,17 +1,17 @@
 CREATE TABLE users (
-    id UUID PRIMARY KEY UNIQUE NOT NULL,
+    id UUID PRIMARY KEY,
     email varchar(254) UNIQUE NOT NULL,
-    normalized_email varchar(254) UNIQUE NOT NULL,
+    "normalizedEmail" varchar(254) UNIQUE NOT NULL,
     username varchar(100) NOT NULL,
-    first_name varchar(254),
-    last_name varchar(254),
+    "firstName" varchar(254),
+    "lastName" varchar(254),
     password varchar(60) NOT NULL,
     role smallint NOT NULL,
-    email_verified boolean NOT NULL,
+    "emailVerified" boolean NOT NULL,
     online boolean NOT NULL
 );
 
-INSERT INTO users (id, email, normalized_email, username, first_name, last_name, password, role, email_verified, online)
+INSERT INTO users (id, email, "normalizedEmail", username, "firstName", "lastName", password, role, "emailVerified", online)
 VALUES (
     gen_random_uuid(), 'igor@gmail.com', 'IGOR@GMAIL.COM', 'igor',
     NULL, NULL,

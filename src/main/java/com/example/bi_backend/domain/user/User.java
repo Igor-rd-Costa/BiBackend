@@ -1,5 +1,6 @@
 package com.example.bi_backend.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -15,29 +16,36 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-@Table(name = "users")
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "users")
 public class User implements UserDetails {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Email
-    private String email = "";
+    private String email;
 
     @Email
-    private String normalizedEmail = "";
-    private String username = "";
-    private String firstName = "";
-    private String lastName = "";
-    private String password = "";
+    @JsonIgnore
+    @Column(name = "`normalizedEmail`")
+    private String normalizedEmail;
+    private String username;
+    @Column(name = "`firstName`")
+    private String firstName;
+    @Column(name = "`lastName`")
+    private String lastName;
+    @JsonIgnore
+    private String password;
     private UserRole role = UserRole.USER;
     private boolean online = false;
+    @Column(name = "`emailVerified`")
     private boolean emailVerified = false;
 
     public User(String email, String password) {

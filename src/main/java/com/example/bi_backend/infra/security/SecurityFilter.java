@@ -1,5 +1,6 @@
 package com.example.bi_backend.infra.security;
 
+import com.example.bi_backend.domain.user.User;
 import com.example.bi_backend.repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -32,17 +33,22 @@ public class SecurityFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
                 return;
             }
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            var autorities = user.getAuthorities();
+            var authentication = new UsernamePasswordAuthenticationToken(user, null, autorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(request, response);
     }
 
     private String recoverToken(HttpServletRequest request) {
-        var authHeader = request.getHeader("Authorization");
-        if (authHeader == null) {
-            return null;
+        var cookies = request.getCookies();
+        if (cookies != null) {
+            for (var cookie : cookies) {
+                if (cookie.getName().equals("jwt")) {
+                    return cookie.getValue();
+                }
+            }
         }
-        return authHeader.replace("Bearer ", "");
+        return null;
     }
 }
